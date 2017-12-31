@@ -10,7 +10,7 @@ from random import randrange
 
 def main():
     '''Outer looper for the application, calls risk_roller until user exits
-    application '''
+    application'''
     quit = False
     while True:
         print('------------------------------------------')
@@ -24,14 +24,16 @@ def risk_roller():
     out the result'''
     try: 
         attacker = int(input("Attacker's troops: "))
+        validate_troop_numbers(True, attacker)
     except ValueError:
-        print('Invalid number')
+        print('Invalid troop input')
         risk_roller()
 
     try:
         defender = int(input("Defender's troops: "))
+        validate_troop_numbers(False, defender)
     except ValueError:
-        print('Invalid number')
+        print('Invalid troop input')
         risk_roller()
 
     #randrange(5)
@@ -75,8 +77,7 @@ def risk_roller():
 
 
 def get_amount_of_dice(attacker, troops):
-    '''Returns the amount of dice the player can use. Attacker boolean, false =
-    defender'''
+    '''Returns the amount of dice the player can use'''
     if (attacker):
         if (troops == 2): return 1
         elif (troops == 3): return 2
@@ -97,6 +98,13 @@ def get_rolls(amount):
         rolls.append(randrange(5))
 
     return rolls
+
+def validate_troop_numbers(attacker, amount):
+    '''Valided the number of troops based on it being the attacker or
+    defender'''
+    if (amount <= 0): raise ValueError
+    elif attacker:
+        if (amount < 2): raise ValueError
         
 
 if __name__ == "__main__":
