@@ -6,10 +6,20 @@ This application asks for troop-numbers and prints out the result of the
 fighting.
 '''
 #TODO: 
-    # Loop risk_roller until cancelled by user
-    # Print result of each roll and prompt to continue attacking...
+    # Exception-handling
 
 from random import randrange
+
+def main():
+    '''Outer looper for the application, calls risk_roller until user exits
+    application '''
+    quit = False
+    while True:
+        print('------------------------------------------')
+        quit_input = input('risk-roller-cli (q to quit)')
+        if (quit_input == 'q'):
+            exit()
+        risk_roller()
 
 def risk_roller():
     '''Main flow of the application. Asks for input, makes the rolls and prints
@@ -35,11 +45,20 @@ def risk_roller():
             else:
                 lost_defenders += 1
 
-            attacker -= lost_attackers
-            defender -= lost_defenders
+        attacker -= lost_attackers
+        defender -= lost_defenders
 
-            lost_attackers = 0
-            lost_defenders = 0
+        print('-----')
+        cont = input(('Attacker lost {0}, {1} remaining\n'
+                    + 'Defender lost {2}, {3} remaining\n'
+                    + '(q to quit, enter to continue)')
+                    .format(
+                            lost_attackers, 
+                            attacker, 
+                            lost_defenders,
+                            defender
+                        ))
+        if (cont == 'q'): main()
 
     if (defender < 1):
         print('Attacker won, and has {0} troops left'.format(str(attacker)))
@@ -71,4 +90,6 @@ def get_rolls(amount):
 
     return rolls
         
-risk_roller()
+
+if __name__ == "__main__":
+    main()
