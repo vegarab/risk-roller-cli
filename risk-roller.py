@@ -5,8 +5,6 @@ A simple application that eliminates the need for dice in the board-game Risk.
 This application asks for troop-numbers and prints out the result of the
 fighting.
 '''
-#TODO: 
-    # Exception-handling
 
 from random import randrange
 
@@ -24,8 +22,18 @@ def main():
 def risk_roller():
     '''Main flow of the application. Asks for input, makes the rolls and prints
     out the result'''
-    attacker = int(input("Attacker's troops: "))
-    defender = int(input("Defender's troops: "))
+    try: 
+        attacker = int(input("Attacker's troops: "))
+    except ValueError:
+        print('Invalid number')
+        risk_roller()
+
+    try:
+        defender = int(input("Defender's troops: "))
+    except ValueError:
+        print('Invalid number')
+        risk_roller()
+
     #randrange(5)
 
     while(attacker > 1 and defender > 0):
@@ -58,7 +66,7 @@ def risk_roller():
                             lost_defenders,
                             defender
                         ))
-        if (cont == 'q'): main()
+        if (cont == 'q'): return
 
     if (defender < 1):
         print('Attacker won, and has {0} troops left'.format(str(attacker)))
